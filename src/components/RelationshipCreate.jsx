@@ -145,7 +145,7 @@ function RelationshipCreate({ onClose }) {
                     <InputField label="Relation Type" id="relationType" value={formData.relationType} onChange={handleChange} placeholder="" error={formErrors?.relationType} />
                     <InputField label="Person Name" id="perName" value={formData.perName} onChange={handleChange} placeholder="" error={formErrors?.perName} />
                     <InputField label="Role in Org" id="roleinOrg" value={formData.roleinOrg} onChange={handleChange} placeholder="" error={formErrors?.roleinOrg} />
-                    <InputField label="Related Org" id="relatedOrg" value={formData.relatedOrg} onChange={handleChange} placeholder="25%" error={formErrors?.relatedOrg} />
+                    <InputField label="Related Org" id="relatedOrg" value={formData.relatedOrg} onChange={handleChange} placeholder="" error={formErrors?.relatedOrg} />
                     <DateInput id="startDate" label="Start Date" value={formData.startDate} onChange={handleChange} required error={formErrors?.startDate} />
                     <TextArea label="Notes" id="notes" value={formData.notes} onChange={handleChange} placeholder="" error={formErrors?.notes} />
                   </div>
