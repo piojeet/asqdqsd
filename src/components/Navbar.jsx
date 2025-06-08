@@ -12,7 +12,7 @@ function Navbar() {
             <form action="#">
               <div className='flex items-center relative shirink-0'>
               <Search className='absolute left-4 size-5' />
-                <input type="text" name="search" id="search" className='py-2 pl-10 w-[315px] pr-14 outline-none rounded-lg bg-bg-light' />
+                <input type="text" name="search" id="search" className='py-2 pl-10 w-[315px] pr-14 outline-none rounded-lg bg-bg-light text-zinc-900 font-manrope-r' placeholder='Search anything…' />
                 <span className='flex items-center gap-1 py-1 px-3 bg-bg absolute right-2 text-heading-color rounded-lg font-manrope-m'>
                   F
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className='fill-heading-color'>

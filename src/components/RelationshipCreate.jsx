@@ -125,7 +125,7 @@ function RelationshipCreate({ onClose }) {
 
       {!showSuccess && (
         <div className="fixed top-0 left-0 bg-gray-400/40 w-full h-full z-50">
-          <div className="h-screen w-fit ml-auto flex items-center overflow-y-auto gap-6">
+          <div className="w-fit ml-auto flex items-center overflow-y-auto gap-6">
             <div
               className="size-12 bg-bg flex items-center justify-center rounded-full text-heading-color cursor-pointer"
               onClick={onClose}
@@ -133,7 +133,8 @@ function RelationshipCreate({ onClose }) {
               <ChevronRight />
             </div>
 
-            <div className="bg-bg h-full py-9 flex flex-col gap-8 w-[400px]">
+           <div className='h-screen overflow-y-auto'>
+             <div className="bg-bg min-h-full py-9 flex flex-col gap-8 w-[400px]">
               <div className="text-2xl font-manropeb font-bold text-heading-color px-8">
                 {editId ? 'Edit Relationship' : 'Add Relationship'}
               </div>
@@ -160,6 +161,8 @@ function RelationshipCreate({ onClose }) {
                 </form>
               </div>
             </div>
+           </div>
+
           </div>
         </div>
       )}
