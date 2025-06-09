@@ -8,16 +8,23 @@ function Roles() {
   const {
     selectedOwnership,
     searchQuery,
+
     ownerships,
     deleteOwnership,
-    selectedItems,
+
+    selectedItemsMap,
     toggleSelectItem,
     toggleSelectAll,
+
     viewId,
     setViewId,
-    editId,
     setEditId,
-  } = useOwnership()
+    editId,
+  } = useOwnership();
+
+  // Unique key for this component
+  const componentKey = 'Roles';
+  const selectedItems = selectedItemsMap[componentKey] || [];
 
   const [showForm, setShowForm] = React.useState(false)
 
@@ -60,87 +67,90 @@ function Roles() {
       <div className='text-2xl font-bold text-heading-color font-manropeb'>Roles</div>
 
       <div className='mt-6'>
-       <div className='whitespace-nowrap overflow-x-auto'>
-         <table className='w-full text-left'>
-          <thead>
-            <tr className='text-[#687588] text-xs font-manropeb'>
-              <th className='bg-bg-light rounded-l-lg'>
-                <span className='flex justify-between items-center py-4 px-2.5'>
-                  <span className='flex items-center gap-2.5'>
-                    <input
-                      type="checkbox"
-                      name="selectallRoles"
-                      checked={selectedItems.length === ownerships.length && ownerships.length > 0}
-                      onChange={toggleSelectAll}
-                    /> Role Title
-                  </span>
-                  <TbCaretUpDownFilled />
-                </span>
-              </th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Organization <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Start Date <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>End Date <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Status <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light rounded-r-lg'><span className='text-right block py-4 px-2.5'>Action</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOwnerships.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="text-center py-8 text-gray-500">
-                  No Roles found.
-                </td>
-              </tr>
-            ) : (
-              filteredOwnerships.map(item => (
-                <tr key={item.id} className='border-b border-border text-heading-color font-manrope-m font-medium text-xs'>
-                  <td>
-                    <span className='px-2.5 py-[18px] flex gap-2.5 items-center'>
+        <div className='whitespace-nowrap overflow-x-auto'>
+          <table className='w-full text-left'>
+            <thead>
+              <tr className='text-[#687588] text-xs font-manropeb'>
+                <th className='bg-bg-light rounded-l-lg'>
+                  <span className='flex justify-between items-center py-4 px-2.5'>
+                    <span className='flex items-center gap-2.5'>
                       <input
                         type="checkbox"
-                        checked={selectedItems.includes(item.id)}
-                        onChange={() => toggleSelectItem(item.id)}
-                      /> {item.roleTitle}
+                        name="selectallrole"
+                        checked={selectedItems.length === filteredOwnerships.length && filteredOwnerships.length > 0}
+                        onChange={() => toggleSelectAll(componentKey, filteredOwnerships.map(item => item.id))}
+                      /> Role Title
                     </span>
-                  </td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{item.orgNameRoles}</span></td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.startDate)}</span></td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.endDate)}</span></td>
-                  <td><span className='flex items-center justify-between'>
-                    <span className='px-4 py-[4px] inline-block bg-green-50 text-green-400 rounded-lg'>{item.status}Active</span>
-                    <ChevronDown className='size-4 text-heading-color' />
-                  </span></td>
-                  <td>
-                    <span className='flex items-center justify-end gap-2.5 px-2.5 py-[18px]'>
-                      <button
-                        onClick={() => setViewId(item.id)}
-                        className='size-8 p-2 bg-[#27A376] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="View Details"
-                      >
-                        <Eye />
-                      </button>
-                      <button
-                        className='size-8 p-2 bg-blue rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="Edit"
-                        onClick={() => openEditForm(item.id)}
-                      >
-                        <PencilLine />
-                      </button>
-                      <button
-                        onClick={() => deleteOwnership(item.id)}
-                        className='size-8 p-2 bg-[#E03137] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="Delete"
-                      >
-                        <Trash2 />
-                      </button>
-                    </span>
+                    <TbCaretUpDownFilled />
+                  </span>
+                </th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Organization <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Start Date <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>End Date <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Status <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light rounded-r-lg'><span className='text-right block py-4 px-2.5'>Action</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredOwnerships.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="text-center py-8 text-gray-500">
+                    No Roles found.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-       </div>
+              ) : (
+                filteredOwnerships.map(item => (
+                  <tr key={item.id} className='border-b border-border text-heading-color font-manrope-m font-medium text-xs'>
+                    <td>
+                      <span className='px-2.5 py-[18px] flex gap-2.5 items-center'>
+                        <input
+                          type="checkbox"
+                          name="select"
+                          id={`select-${item.id}`}
+                          checked={selectedItems.includes(item.id)}
+                          onChange={() => toggleSelectItem(componentKey, item.id)} // FIX: pass componentKey!
+                        />
+                        {item.roleTitle}
+                      </span>
+                    </td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{item.orgNameRoles}</span></td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.startDate)}</span></td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.endDate)}</span></td>
+                    <td><span className='flex items-center justify-between'>
+                      <span className='px-4 py-[4px] inline-block bg-green-50 text-green-400 rounded-lg'>{item.status}Active</span>
+                      <ChevronDown className='size-4 text-heading-color' />
+                    </span></td>
+                    <td>
+                      <span className='flex items-center justify-end gap-2.5 px-2.5 py-[18px]'>
+                        <button
+                          onClick={() => setViewId(item.id)}
+                          className='size-8 p-2 bg-[#27A376] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="View Details"
+                        >
+                          <Eye />
+                        </button>
+                        <button
+                          className='size-8 p-2 bg-blue rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="Edit"
+                          onClick={() => openEditForm(item.id)}
+                        >
+                          <PencilLine />
+                        </button>
+                        <button
+                          onClick={() => deleteOwnership(item.id)}
+                          className='size-8 p-2 bg-[#E03137] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="Delete"
+                        >
+                          <Trash2 />
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <button
           className='md:p-6 p-4 md:text-base text-sm flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb cursor-pointer mt-8'

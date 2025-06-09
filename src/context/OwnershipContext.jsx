@@ -1,4 +1,3 @@
-// OwnershipContext.js
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 const OwnershipContext = createContext();
@@ -10,13 +9,13 @@ export const OwnershipProvider = ({ children }) => {
   const dropdownRef = useRef(null);
   const dateInputRef = useRef(null);
 
-  const [ownerships, setOwnerships] = useState([]); // table data
-  const [selectedItems, setSelectedItems] = useState([]); // checkboxes
-  const [editId, setEditId] = useState(null); // for edit
-  const [viewId, setViewId] = useState(null); // for view modal
-  const [activeTab, setActiveTab] = useState('OwnInterest'); // NEW: active tab tracker
+  const [ownerships, setOwnerships] = useState([]);
+  const [selectedItemsMap, setSelectedItemsMap] = useState({});
+  const [editId, setEditId] = useState(null);
+  const [viewId, setViewId] = useState(null);
+  const [activeTab, setActiveTab] = useState('OwnInterest');
 
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,7 +26,6 @@ export const OwnershipProvider = ({ children }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Open native date picker
   const openDatePicker = () => {
     if (dateInputRef.current) dateInputRef.current.showPicker();
   };
@@ -37,55 +35,57 @@ export const OwnershipProvider = ({ children }) => {
     setDropdownOpen(false);
   };
 
-  // Add new ownership entry
   const addOwnership = (newData) => {
     setOwnerships((prev) => [...prev, { ...newData, id: newData.id || Date.now() }]);
   };
 
-  // Delete a single ownership entry
   const deleteOwnership = (id) => {
     setOwnerships((prev) => prev.filter((item) => item.id !== id));
-    setSelectedItems((prev) => prev.filter((itemId) => itemId !== id));
+    setSelectedItemsMap((prev) => {
+      const updated = {};
+      for (const key in prev) {
+        updated[key] = prev[key].filter((itemId) => itemId !== id);
+      }
+      return updated;
+    });
   };
 
-  // Edit an ownership entry
-const updateOwnership = (id, updatedItem) => {
-  setOwnerships((prev) =>
-    prev.map((item) =>
-      item.id === id ? { ...item, ...updatedItem } : item
-    )
-  );
-};
-
-
-  // Toggle individual checkbox
-  const toggleSelectItem = (id) => {
-    setSelectedItems((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+  const updateOwnership = (id, updatedItem) => {
+    setOwnerships((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, ...updatedItem } : item))
     );
-  };
-
-  // Select/Deselect all
-  const toggleSelectAll = () => {
-    if (selectedItems.length === ownerships.length) {
-      setSelectedItems([]);
-    } else {
-      setSelectedItems(ownerships.map((item) => item.id));
-    }
   };
 
   const editOwnership = (id, updatedData) => {
     setOwnerships((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, ...updatedData } : item
-      )
+      prev.map((item) => (item.id === id ? { ...item, ...updatedData } : item))
     );
+  };
+
+  const toggleSelectItem = (componentKey, id) => {
+    setSelectedItemsMap((prev) => {
+      const selected = prev[componentKey] || [];
+      const updated = selected.includes(id)
+        ? selected.filter((itemId) => itemId !== id)
+        : [...selected, id];
+      return { ...prev, [componentKey]: updated };
+    });
+  };
+
+  const toggleSelectAll = (componentKey, allIds) => {
+    setSelectedItemsMap((prev) => {
+      const selected = prev[componentKey] || [];
+      const alreadyAllSelected = selected.length === allIds.length;
+      return {
+        ...prev,
+        [componentKey]: alreadyAllSelected ? [] : allIds,
+      };
+    });
   };
 
   return (
     <OwnershipContext.Provider
       value={{
-        // UI Controls
         dropdownOpen,
         setDropdownOpen,
         selectedOwnership,
@@ -96,22 +96,18 @@ const updateOwnership = (id, updatedItem) => {
         searchQuery,
         setSearchQuery,
 
-        // Tab Control
         activeTab,
-        setActiveTab, // for switching tab views
+        setActiveTab,
 
-        // Data
         ownerships,
         addOwnership,
         deleteOwnership,
         updateOwnership,
 
-        // Selection
-        selectedItems,
+        selectedItemsMap,
         toggleSelectItem,
         toggleSelectAll,
 
-        // Edit/View
         editId,
         setEditId,
         viewId,

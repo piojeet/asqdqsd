@@ -1,7 +1,6 @@
-import { Bell, ChevronDown, Menu, Search } from 'lucide-react'
+import { Bell, ChevronDown, Menu, Search, User } from 'lucide-react'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import user from '../assets/9e729cfc2fb3451f2790627112ebba6732cb7a49.jpg'
 import { useNavbar } from '../context/NavbarContext';
 
 function Navbar() {
@@ -48,7 +47,7 @@ function Navbar() {
                 </NavLink>
               </div>
               <div className='flex items-center gap-2 cursor-pointer'>
-                <img src={user} alt="user" className='size-8 rounded-full object-cover object-center' />
+                <div className='size-8 bg-light-icon rounded-full flex items-center justify-center text-bg-light'><User size={20} /></div>
                 <ChevronDown className='text-heading-color size-5' />
               </div>
             </div>

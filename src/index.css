@@ -1,65 +1,76 @@
 @import "tailwindcss";
 
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+}
+
 @font-face {
   font-family: 'Inter-SemiBold';
-  src: url('./assets/fonts/Inter-SemiBold.woff2') format('woff2');
+  src: url('./assets/fonts/Inter-SemiBold.woff2') format('woff2'),
+    url('./assets/fonts/Inter-SemiBold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-Bold';
-  src: url('./assets/fonts/Manrope-Bold.woff2') format('woff2');
+  src: url('./assets/fonts/Manrope-Bold.woff2') format('woff2'),
+  url('./assets/fonts/Manrope-Bold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SF-Bold';
-  src: url('./assets/fonts/SFPRODISPLAYBOLD.woff2') format('woff2');
+  src: url('./assets/fonts/SFPRODISPLAYBOLD.woff2') format('woff2'),
+  url('./assets/fonts/SFPRODISPLAYBOLD.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-Regular';
-  src: url('./assets/fonts/Manrope-Regular.woff2') format('woff2');
+  src: url('./assets/fonts/Manrope-Regular.woff2') format('woff2'),
+  url('./assets/fonts/Manrope-Regular.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-Medium';
-  src: url('./assets/fonts/Manrope-Medium.woff2') format('woff2');
+  src: url('./assets/fonts/Manrope-Medium.woff2') format('woff2'),
+  url('./assets/fonts/Manrope-Medium.woff') format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 :root {
-    --border-color: #E9EAEC; /* Light mode value */
-    --color-heading: #111827;
-    --color-bg: #fff;
-    --light-icon: #A0AEC0;
-    --blue-color: #2E0E98;
-  }
+  --border-color: #E9EAEC;
+  /* Light mode value */
+  --color-heading: #111827;
+  --color-bg: #fff;
+  --light-icon: #A0AEC0;
+  --blue-color: #2E0E98;
+}
 
-  .dark {
-     --color-heading-color: #ffffff;
-    --color-bg: #111827;
-    --blue-color: #8e6cff;
-  }
+.dark {
+  --color-heading-color: #ffffff;
+  --color-bg: #111827;
+  --blue-color: #8e6cff;
+}
 
 @theme {
-    --color-border: var(--border-color);
-    --font-interb: "Inter-SemiBold";
-    --font-manropeb: "Manrope-Bold";
-    --font-sf-pro: "SF-Bold";
-    --font-manrope-r: "Manrope-Regular";
-    --font-manrope-m: "Manrope-Medium";
-    --color-blue: var(--blue-color);
-    --color-bg: var(--color-bg);
-    --color-heading-color: var(--color-heading);
-    --color-bg-light: #F8F8F8;
-    --color-light-icon: var(--light-icon);
-    --color-red: #E03137;
+  --color-border: var(--border-color);
+  --font-interb: "Inter-SemiBold";
+  --font-manropeb: "Manrope-Bold";
+  --font-sf-pro: "SF-Bold";
+  --font-manrope-r: "Manrope-Regular";
+  --font-manrope-m: "Manrope-Medium";
+  --color-blue: var(--blue-color);
+  --color-bg: var(--color-bg);
+  --color-heading-color: var(--color-heading);
+  --color-bg-light: #F8F8F8;
+  --color-light-icon: var(--light-icon);
+  --color-red: #E03137;
 }

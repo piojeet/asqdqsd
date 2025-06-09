@@ -19,7 +19,7 @@ function OwnIntrest() {
     ownerships,
     deleteOwnership,
 
-    selectedItems,
+    selectedItemsMap,
     toggleSelectItem,
     toggleSelectAll,
 
@@ -27,12 +27,17 @@ function OwnIntrest() {
     setViewId,
     setEditId,
     editId,
-  } = useOwnership()
+  } = useOwnership();
+
+  // Unique key for this component
+  const componentKey = 'ownInterest';
+  const selectedItems = selectedItemsMap[componentKey] || [];
 
   const [showForm, setShowForm] = React.useState(false)
 
   // Get data for editing, if editId is set
   const selectedData = ownerships.find((item) => item.id === editId)
+  console.log('selected', selectedData)
 
   // Filter ownerships based on searchQuery and selectedOwnership
   const filteredOwnerships = ownerships.filter(item => {
@@ -155,10 +160,10 @@ function OwnIntrest() {
                       <input
                         type="checkbox"
                         name="selectallown"
-                        id="selectallown"
-                        checked={selectedItems.length === ownerships.length && ownerships.length > 0}
-                        onChange={toggleSelectAll}
-                      /> Type
+                        checked={selectedItems.length === filteredOwnerships.length && filteredOwnerships.length > 0}
+                        onChange={() => toggleSelectAll(componentKey, filteredOwnerships.map(item => item.id))}
+                      />
+                      Type
                     </span>
                     <TbCaretUpDownFilled />
                   </span>
@@ -187,8 +192,9 @@ function OwnIntrest() {
                           name="select"
                           id={`select-${item.id}`}
                           checked={selectedItems.includes(item.id)}
-                          onChange={() => toggleSelectItem(item.id)}
-                        /> {item.ownershipType}
+                          onChange={() => toggleSelectItem(componentKey, item.id)} // FIX: pass componentKey!
+                        />
+                        {item.ownershipType}
                       </span>
                     </td>
                     <td><span className='px-2.5 py-[18px] inline-block'>{item.orgName}</span></td>
