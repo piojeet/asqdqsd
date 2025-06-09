@@ -35,13 +35,13 @@ function OwnIntrest() {
   const selectedData = ownerships.find((item) => item.id === editId)
 
   // Filter ownerships based on searchQuery and selectedOwnership
-const filteredOwnerships = ownerships.filter(item => {
-  if (item.type !== 'Ownership') return false;
-  const org = item.organization || "";
-  const matchesSearch = org.toLowerCase().includes(searchQuery.toLowerCase());
-  const matchesType = selectedOwnership === 'Ownership' || item.type === selectedOwnership;
-  return matchesSearch && matchesType;
-});
+  const filteredOwnerships = ownerships.filter(item => {
+    if (item.type !== 'Ownership') return false;
+    const org = item.organization || "";
+    const matchesSearch = org.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = selectedOwnership === 'Ownership' || item.type === selectedOwnership;
+    return matchesSearch && matchesType;
+  });
 
 
 
@@ -68,8 +68,8 @@ const filteredOwnerships = ownerships.filter(item => {
     setShowForm(false)
     setEditId(null)
   }
-  
-   // Get the ownership item user wants to view
+
+  // Get the ownership item user wants to view
   const viewedItem = ownerships.find(item => item.id === viewId)
 
   return (
@@ -77,7 +77,7 @@ const filteredOwnerships = ownerships.filter(item => {
       <div className='text-2xl font-bold text-heading-color font-manropeb'>Ownership Interests</div>
 
       <div className='mt-6'>
-        <form action="#" className='flex gap-4'>
+        <form action="#" className='flex gap-4 flex-col sm:flex-row'>
 
           {/* Search Input */}
           <div className='relative w-full'>
@@ -144,97 +144,99 @@ const filteredOwnerships = ownerships.filter(item => {
       </div>
 
       {/* Table */}
-      <div className='mt-6 overflow-auto'>
-        <table className='w-full text-left'>
-          <thead>
-            <tr className='text-[#687588] text-xs font-manropeb !rounded-lg'>
-              <th className='bg-bg-light rounded-l-lg'>
-                <span className='flex justify-between items-center py-4 px-2.5'>
-                  <span className='flex items-center gap-2.5'>
-                    <input
-                      type="checkbox"
-                      name="selectall"
-                      id="selectall"
-                      checked={selectedItems.length === ownerships.length && ownerships.length > 0}
-                      onChange={toggleSelectAll}
-                    /> Type
-                  </span>
-                  <TbCaretUpDownFilled />
-                </span>
-              </th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Organization <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Ownership % <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Country <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Last Updated <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light rounded-r-lg'><span className='text-right block py-4 px-2.5'>Action</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOwnerships.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="text-center py-8 text-gray-500">
-                  No ownership interests found.
-                </td>
-              </tr>
-            ) : (
-              filteredOwnerships.map(item => (
-                <tr key={item.id} className='border-b border-border text-heading-color font-manrope-m font-medium text-xs'>
-                  <td>
-                    <span className='px-2.5 py-[18px] flex gap-2.5 items-center'>
+      <div className='mt-6'>
+        <div className='whitespace-nowrap overflow-x-auto'>
+          <table className='w-full text-left'>
+            <thead>
+              <tr className='text-[#687588] text-xs font-manropeb !rounded-lg'>
+                <th className='bg-bg-light rounded-l-lg'>
+                  <span className='flex justify-between items-center py-4 px-2.5'>
+                    <span className='flex items-center gap-2.5'>
                       <input
                         type="checkbox"
-                        name="select"
-                        id={`select-${item.id}`}
-                        checked={selectedItems.includes(item.id)}
-                        onChange={() => toggleSelectItem(item.id)}
-                      /> {item.ownershipType}
+                        name="selectallown"
+                        id="selectallown"
+                        checked={selectedItems.length === ownerships.length && ownerships.length > 0}
+                        onChange={toggleSelectAll}
+                      /> Type
                     </span>
-                  </td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{item.orgName}</span></td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{item.ownershipPercentage}%</span></td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{item.country}</span></td>
-                  <td>
-                    <span className='px-2.5 py-[18px] inline-block'>
-                      {formatDate(item.startDate)}
-                    </span>
-                  </td>
-
-                  <td>
-                    <span className='flex items-center justify-end gap-2.5 px-2.5 py-[18px]'>
-                      <button
-                        onClick={() => setViewId(item.id)}
-                        className='size-8 p-2 bg-[#27A376] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="View Details"
-                      >
-                        <Eye />
-                      </button>
-                      {/* You can add edit and delete handlers similarly */}
-                      <button
-                        onClick={() => openEditForm(item.id)} // <-- sets the item to edit
-                        className='size-8 p-2 bg-blue rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="Edit"
-                      >
-                        <PencilLine />
-                      </button>
-
-                      <button
-                        onClick={() => deleteOwnership(item.id)}
-                        className='size-8 p-2 bg-[#E03137] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
-                        title="Delete"
-                      >
-                        <Trash2 />
-                      </button>
-                    </span>
+                    <TbCaretUpDownFilled />
+                  </span>
+                </th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Organization <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Ownership % <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Country <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Last Updated <TbCaretUpDownFilled /></span></th>
+                <th className='bg-bg-light rounded-r-lg'><span className='text-right block py-4 px-2.5'>Action</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredOwnerships.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-8 text-gray-500">
+                    No ownership interests found.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredOwnerships.map(item => (
+                  <tr key={item.id} className='border-b border-border text-heading-color font-manrope-m font-medium text-xs'>
+                    <td>
+                      <span className='px-2.5 py-[18px] flex gap-2.5 items-center'>
+                        <input
+                          type="checkbox"
+                          name="select"
+                          id={`select-${item.id}`}
+                          checked={selectedItems.includes(item.id)}
+                          onChange={() => toggleSelectItem(item.id)}
+                        /> {item.ownershipType}
+                      </span>
+                    </td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{item.orgName}</span></td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{item.ownershipPercentage}%</span></td>
+                    <td><span className='px-2.5 py-[18px] inline-block'>{item.country}</span></td>
+                    <td>
+                      <span className='px-2.5 py-[18px] inline-block'>
+                        {formatDate(item.startDate)}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span className='flex items-center justify-end gap-2.5 px-2.5 py-[18px]'>
+                        <button
+                          onClick={() => setViewId(item.id)}
+                          className='size-8 p-2 bg-[#27A376] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="View Details"
+                        >
+                          <Eye />
+                        </button>
+                        {/* You can add edit and delete handlers similarly */}
+                        <button
+                          onClick={() => openEditForm(item.id)} // <-- sets the item to edit
+                          className='size-8 p-2 bg-blue rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="Edit"
+                        >
+                          <PencilLine />
+                        </button>
+
+                        <button
+                          onClick={() => deleteOwnership(item.id)}
+                          className='size-8 p-2 bg-[#E03137] rounded-lg text-bg-light flex items-center justify-center cursor-pointer'
+                          title="Delete"
+                        >
+                          <Trash2 />
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         <button
-          className='p-6 flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb text-base cursor-pointer mt-4'
-         onClick={openCreateForm}
+          className='md:p-6 p-4 md:text-base text-sm flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb cursor-pointer mt-8'
+          onClick={openCreateForm}
         >
           <Plus /> Add Ownership Interest
         </button>
@@ -253,23 +255,25 @@ const filteredOwnerships = ownerships.filter(item => {
       {/* View modal */}
       {viewId && viewedItem && (
         <div
-          className="fixed inset-0 bg-black/20 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-gray-400/40 flex items-center justify-center z-50"
           onClick={() => setViewId(null)}
         >
           <div
-            className="bg-white rounded-lg p-6 max-w-md w-full"
+            className="bg-bg rounded-lg p-6 max-w-md w-full"
             onClick={e => e.stopPropagation()} // Prevent modal close when clicking inside
           >
-            <h2 className="text-xl font-bold mb-4">Ownership Details</h2>
-            <p><strong>Type:</strong> {viewedItem.type || 'N/A'}</p>
-            <p><strong>Organization:</strong> {viewedItem.organization}</p>
-            <p><strong>Ownership %:</strong> {viewedItem.ownershipPercent}</p>
-            <p><strong>Country:</strong> {viewedItem.country}</p>
-            <p><strong>Last Updated:</strong> {viewedItem.lastUpdated}</p>
+            <h2 className="text-xl font-bold mb-4 font-manropeb text-heading-color">Ownership Details</h2>
+            <div className='space-y-2'>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Type:</strong> <span className='font-manrope-m'>{viewedItem.ownershipType}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Organization:</strong> <span className='font-manrope-m'>{viewedItem.orgName}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Ownership:</strong> <span className='font-manrope-m'>{viewedItem.ownershipPercentage}%</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Country:</strong> <span className='font-manrope-m'>{viewedItem.country}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Last Updated:</strong> <span className='font-manrope-m'>{formatDate(viewedItem.startDate)}</span></p>
+            </div>
 
             <button
               onClick={() => setViewId(null)}
-              className="mt-6 px-4 py-2 bg-blue text-bg-light rounded"
+              className="mt-6 px-4 py-2 bg-blue text-bg-light rounded font-manrope-m font-medium cursor-pointer"
             >
               Close
             </button>

@@ -1,13 +1,17 @@
 import React from 'react'
 import ToggleSwitch from './ToggleSwitch'
 import { NavLink, } from 'react-router-dom'
-import { ChevronDown, CircleHelp, ClipboardList, LayoutGrid } from 'lucide-react'
+import { ChevronDown, CircleHelp, ClipboardList, LayoutGrid, X } from 'lucide-react'
+import { useNavbar } from '../context/NavbarContext';
 
 function SideBar() {
 
+  const { closeMenu, isMenuOpen } = useNavbar();
 
   return (
-    <div className='min-w-[280px] p-6 border-r border-border h-full'>
+    <div className={`bg-gray-400/40 lg:static fixed z-[10000] h-screen w-full ${isMenuOpen ? 'left-0' : '-left-full'}`}>
+      <div className={`lg:min-w-[280px] w-[280px] p-6 border-r border-border h-full bg-bg relative transition-all duration-400 lg:static ${isMenuOpen ? 'left-0' : '-left-full'}`}>
+      <button className='absolute top-2 right-3 text-heading-color z-50 cursor-pointer' onClick={closeMenu}><X /></button>
       <div className='h-full flex flex-col justify-between'>
         <div className='h-full flex flex-col gap-6'>
           <div className='font-interb font-semibold text-2xl text-blue'>KPMG</div>
@@ -65,6 +69,7 @@ function SideBar() {
           <ToggleSwitch />
         </div>
       </div>
+    </div>
     </div>
   )
 }

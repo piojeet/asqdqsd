@@ -26,12 +26,12 @@ function Roles() {
 
   // Filter ownerships based on searchQuery and selectedOwnership
   const filteredOwnerships = ownerships.filter(item => {
-     if (item.type !== 'Roles') return false;
-    const org = item.organization || ""
-    const matchesSearch = org.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesType = selectedOwnership === 'Roles' || item.type === selectedOwnership
-    return matchesSearch && matchesType
-  })
+    if (item.type !== 'Roles') return false;
+    const org = item.organization || "";
+    const matchesSearch = org.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = selectedOwnership === 'Ownership' || item.type === selectedOwnership;
+    return matchesSearch && matchesType;
+  });
 
   const formatDate = (dateInput) => {
     const date = new Date(dateInput)
@@ -59,8 +59,9 @@ function Roles() {
     <div>
       <div className='text-2xl font-bold text-heading-color font-manropeb'>Roles</div>
 
-      <div className='mt-6 overflow-auto'>
-        <table className='w-full text-left'>
+      <div className='mt-6'>
+       <div className='whitespace-nowrap overflow-x-auto'>
+         <table className='w-full text-left'>
           <thead>
             <tr className='text-[#687588] text-xs font-manropeb'>
               <th className='bg-bg-light rounded-l-lg'>
@@ -68,7 +69,7 @@ function Roles() {
                   <span className='flex items-center gap-2.5'>
                     <input
                       type="checkbox"
-                      name="selectall"
+                      name="selectallRoles"
                       checked={selectedItems.length === ownerships.length && ownerships.length > 0}
                       onChange={toggleSelectAll}
                     /> Role Title
@@ -79,7 +80,6 @@ function Roles() {
               <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Organization <TbCaretUpDownFilled /></span></th>
               <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Start Date <TbCaretUpDownFilled /></span></th>
               <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>End Date <TbCaretUpDownFilled /></span></th>
-              <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Last Updated <TbCaretUpDownFilled /></span></th>
               <th className='bg-bg-light'><span className='flex justify-between items-center py-4 px-2.5'>Status <TbCaretUpDownFilled /></span></th>
               <th className='bg-bg-light rounded-r-lg'><span className='text-right block py-4 px-2.5'>Action</span></th>
             </tr>
@@ -100,13 +100,12 @@ function Roles() {
                         type="checkbox"
                         checked={selectedItems.includes(item.id)}
                         onChange={() => toggleSelectItem(item.id)}
-                      /> {item.ownershipType}
+                      /> {item.roleTitle}
                     </span>
                   </td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{item.orgName}</span></td>
+                  <td><span className='px-2.5 py-[18px] inline-block'>{item.orgNameRoles}</span></td>
                   <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.startDate)}</span></td>
                   <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.endDate)}</span></td>
-                  <td><span className='px-2.5 py-[18px] inline-block'>{formatDate(item.lastUpdated)}</span></td>
                   <td><span className='flex items-center justify-between'>
                     <span className='px-4 py-[4px] inline-block bg-green-50 text-green-400 rounded-lg'>{item.status}Active</span>
                     <ChevronDown className='size-4 text-heading-color' />
@@ -141,9 +140,10 @@ function Roles() {
             )}
           </tbody>
         </table>
+       </div>
 
         <button
-          className='p-6 flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb text-base cursor-pointer mt-4'
+          className='md:p-6 p-4 md:text-base text-sm flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb cursor-pointer mt-8'
           onClick={openCreateForm}
         >
           <Plus /> Add Role
@@ -162,23 +162,25 @@ function Roles() {
       {/* View modal */}
       {viewId && viewedItem && (
         <div
-          className="fixed inset-0 bg-black/20 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-gray-400/40 flex items-center justify-center z-50"
           onClick={() => setViewId(null)}
         >
           <div
-            className="bg-white rounded-lg p-6 max-w-md w-full"
-            onClick={e => e.stopPropagation()}
+            className="bg-bg rounded-lg p-6 max-w-md w-full"
+            onClick={e => e.stopPropagation()} // Prevent modal close when clicking inside
           >
-            <h2 className="text-xl font-bold mb-4">Ownership Details</h2>
-            <p><strong>Type:</strong> {viewedItem.type || 'N/A'}</p>
-            <p><strong>Organization:</strong> {viewedItem.organization}</p>
-            <p><strong>Ownership %:</strong> {viewedItem.ownershipPercent}</p>
-            <p><strong>Country:</strong> {viewedItem.country}</p>
-            <p><strong>Last Updated:</strong> {viewedItem.lastUpdated}</p>
+            <h2 className="text-xl font-bold mb-4 font-manropeb text-heading-color">Ownership Details</h2>
+            <div className='space-y-2'>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Role Title:</strong> <span className='font-manrope-m'>{viewedItem.ownershipType}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Organization:</strong> <span className='font-manrope-m'>{viewedItem.orgName}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Start Date:</strong> <span className='font-manrope-m'>{formatDate(viewedItem.startDate)}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>End Date:</strong> <span className='font-manrope-m'>{formatDate(viewedItem.endDate)}</span></p>
+              <p className='text-heading-color text-xs flex items-center'><strong className='w-[100px] font-manropeb'>Status:</strong> <span className='font-manrope-m'>{viewedItem.status}Active</span></p>
+            </div>
 
             <button
               onClick={() => setViewId(null)}
-              className="mt-6 px-4 py-2 bg-blue text-bg-light rounded"
+              className="mt-6 px-4 py-2 bg-blue text-bg-light rounded font-manrope-m font-medium cursor-pointer"
             >
               Close
             </button>

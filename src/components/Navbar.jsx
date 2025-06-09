@@ -1,18 +1,22 @@
-import { Bell, ChevronDown, Search } from 'lucide-react'
+import { Bell, ChevronDown, Menu, Search } from 'lucide-react'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import user from '../assets/9e729cfc2fb3451f2790627112ebba6732cb7a49.jpg'
+import { useNavbar } from '../context/NavbarContext';
 
 function Navbar() {
+
+  const { openMenu } = useNavbar();
+
   return (
     <div className='w-full'>
-      <header className='border-b border-border py-6 px-8'>
-        <nav className='flex justify-between'>
+      <header className='border-b border-border md:py-6 py-4 md:px-8 px-6'>
+        <nav className='flex justify-between flex-col-reverse lg:flex-row lg:gap-0 gap-4'>
           <div className=''>
             <form action="#">
-              <div className='flex items-center relative shirink-0'>
-              <Search className='absolute left-4 size-5' />
-                <input type="text" name="search" id="search" className='py-2 pl-10 w-[315px] pr-14 outline-none rounded-lg bg-bg-light text-zinc-900 font-manrope-r' placeholder='Search anything…' />
+              <div className='flex items-center relative shirink-0 sm:w-fit w-full'>
+                <Search className='absolute left-4 size-5' />
+                <input type="text" name="search" id="search" className='py-2 pl-10 sm:w-[315px] pr-14 outline-none rounded-lg bg-bg-light text-zinc-900 font-manrope-r w-full' placeholder='Search anything…' />
                 <span className='flex items-center gap-1 py-1 px-3 bg-bg absolute right-2 text-heading-color rounded-lg font-manrope-m'>
                   F
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className='fill-heading-color'>
@@ -23,28 +27,33 @@ function Navbar() {
             </form>
           </div>
 
-          <div className='flex items-center gap-6'>
-            <div>
-              <NavLink to={''}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='stroke-heading-color'>
-                  <path d="M16.99 8.96002H7.01001" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M12 7.28003V8.96002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M14.5 8.94C14.5 13.24 11.14 16.72 7 16.72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M16.9999 16.72C15.1999 16.72 13.6 15.76 12.45 14.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </NavLink>
-            </div>
-            <div>
-              <NavLink to={''}>
-                <Bell className='text-heading-color' />
-              </NavLink>
-            </div>
-            <div className='flex items-center gap-2 cursor-pointer'>
-              <img src={user} alt="user" className='size-8 rounded-full object-cover object-center' />
-              <ChevronDown className='text-heading-color size-5' />
+          <div className='flex items-center justify-between'>
+              <button className='lg:hidden outline-none border-none bg-none text-heading-color cursor-pointer' onClick={openMenu}><Menu /></button>
+            <div className='flex items-center sm:gap-6 gap-4'>
+              <div>
+                <NavLink to={''}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className='stroke-heading-color'>
+                    <path d="M16.99 8.96002H7.01001" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 7.28003V8.96002" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M14.5 8.94C14.5 13.24 11.14 16.72 7 16.72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16.9999 16.72C15.1999 16.72 13.6 15.76 12.45 14.25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </NavLink>
+              </div>
+              <div>
+                <NavLink to={''} className={'relative'}>
+                  <Bell className='text-heading-color' />
+                  <span className='absolute size-2.5 bg-red-500 rounded-full top-0.5 right-0.5 border-2 border-bg'></span>
+                </NavLink>
+              </div>
+              <div className='flex items-center gap-2 cursor-pointer'>
+                <img src={user} alt="user" className='size-8 rounded-full object-cover object-center' />
+                <ChevronDown className='text-heading-color size-5' />
+              </div>
             </div>
           </div>
+
         </nav>
       </header>
     </div>

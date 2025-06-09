@@ -139,23 +139,23 @@ function OtherCreate({ onClose }) {
 
       {!showSuccess && (
         <div className="fixed top-0 left-0 bg-gray-400/40 w-full h-full z-50">
-          <div className="w-fit ml-auto flex items-center overflow-y-auto gap-6">
+          <div className="sm:w-fit w-full ml-auto flex items-center overflow-y-auto gap-6">
             <div
-              className="size-12 bg-bg flex items-center justify-center rounded-full text-heading-color cursor-pointer"
+              className="size-12 bg-bg sm:flex hidden items-center justify-center rounded-full text-heading-color cursor-pointer"
               onClick={onClose}
             >
               <ChevronRight />
             </div>
 
-            <div className='h-screen overflow-y-auto'>
-              <div className="bg-bg min-h-full py-9 flex flex-col gap-8 w-[400px]">
-                <div className="text-2xl font-manropeb font-bold text-heading-color px-8">
+            <div className='h-screen overflow-y-auto shrink-0 max-w-[300px] w-full sm:w-fit sm:max-w-fit'>
+              <div className="bg-bg min-h-full py-9 flex flex-col gap-8 sm:w-[400px] w-full">
+                <div className="sm:text-2xl text-xl font-manropeb font-bold text-heading-color sm:px-8 px-6">
                   {editId ? 'Edit Other Disclosure' : 'Add Other Disclosure'}
                 </div>
 
                 <div className="h-full">
                   <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between gap-8">
-                    <div className="px-8 space-y-6">
+                    <div className="sm:px-8 px-6 space-y-6">
                       <InputField label="Title / Category" id="titleCategory" value={formData.titleCategory} onChange={handleChange} placeholder="" error={formErrors?.titleCategory} />
                       <InputField label="Related Party or Org" id="relaPartyOrg" value={formData.relaPartyOrg} onChange={handleChange} placeholder="" error={formErrors?.relaPartyOrg} />
                       <InputField label="Country" id="country" value={formData.country} onChange={handleChange} placeholder="" error={formErrors?.country} />

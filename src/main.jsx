@@ -4,11 +4,14 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { NavbarProvider } from './context/NavbarContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <ThemeProvider>
-      <App />
+      <NavbarProvider>
+        <App />
+      </NavbarProvider>
     </ThemeProvider>
   </BrowserRouter>,
 )

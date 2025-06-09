@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 function App() {
   return (
     <div className='flex bg-bg h-full'>
-      <div className='h-screen sticky top-0'>
+      <div className='h-screen lg:ticky top-0'>
         <SideBar />
       </div>
       <div className='w-full'>

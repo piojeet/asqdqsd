@@ -16,9 +16,9 @@ function RolesCreate({ onClose }) {
   const existingData = ownerships.find(item => item.id === editId);
 
   const [formData, setFormData] = useState({
-    ownershipType: '',
-    orgName: '',
-    orgNumber: '',
+    roleTitle: '',
+    orgNameRoles: '',
+    orgNumberRole: '',
     ownershipPercentage: '',
     country: '',
     startDate: '',
@@ -32,9 +32,9 @@ function RolesCreate({ onClose }) {
       const existingData = ownerships.find(item => item.id === editId);
       if (existingData) {
         setFormData({
-          ownershipType: existingData.ownershipType || '',
-          orgName: existingData.orgName || '',
-          orgNumber: existingData.orgNumber || '',
+          roleTitle: existingData.roleTitle || '',
+          orgNameRoles: existingData.orgNameRoles || '',
+          orgNumberRole: existingData.orgNumberRole || '',
           ownershipPercentage: existingData.ownershipPercentage || '',
           country: existingData.country || '',
           startDate: existingData.startDate || '',
@@ -61,10 +61,9 @@ function RolesCreate({ onClose }) {
   const validateField = (id, value) => {
     if (
       [
-        'ownershipType',
-        'orgName',
-        'orgNumber',
-        'ownershipPercentage',
+        'roleTitle',
+        'orgNameRoles',
+        'orgNumberRole',
         'country',
         'startDate',
         'notes',
@@ -91,10 +90,9 @@ function RolesCreate({ onClose }) {
     Object.entries(formData).forEach(([key, value]) => {
       if (
         [
-          'ownershipType',
-          'orgName',
-          'orgNumber',
-          'ownershipPercentage',
+          'roleTitle',
+          'orgNameRoles',
+          'orgNumberRole',
           'country',
           'startDate',
           'notes',
@@ -111,10 +109,9 @@ function RolesCreate({ onClose }) {
 
     const ownershipData = {
       id: editId || Date.now(),
-      ownershipType: formData.ownershipType?.trim() || '—',
-      orgName: formData.orgName?.trim() || '—',
-      orgNumber: formData.orgNumber?.trim() || '—',
-      ownershipPercentage: formData.ownershipPercentage?.trim() || '0%',
+      roleTitle: formData.roleTitle?.trim() || '—',
+      orgNameRoles: formData.orgNameRoles?.trim() || '—',
+      orgNumberRole: formData.orgNumberRole?.trim() || '—',
       country: formData.country?.trim() || '—',
       startDate: formData.startDate || '—',
       endDate: formData.endDate || '—',
@@ -152,27 +149,26 @@ function RolesCreate({ onClose }) {
 
       {!showSuccess && (
         <div className="fixed top-0 left-0 bg-gray-400/40 w-full h-full z-50">
-          <div className="w-fit ml-auto flex items-center overflow-y-auto gap-6">
+          <div className="sm:w-fit w-full ml-auto flex items-center overflow-y-auto gap-6">
             <div
-              className="size-12 bg-bg flex items-center justify-center rounded-full text-heading-color cursor-pointer"
+              className="size-12 bg-bg sm:flex items-center justify-center rounded-full text-heading-color cursor-pointer hidden"
               onClick={onClose}
             >
               <ChevronRight />
             </div>
 
-            <div className='h-screen overflow-y-auto'>
-              <div className="bg-bg min-h-full py-9 flex flex-col gap-8 w-[400px]">
-                <div className="text-2xl font-manropeb font-bold text-heading-color px-8">
+            <div className='h-screen overflow-y-auto shrink-0 max-w-[300px] w-full sm:max-w-fit sm:w-fit'>
+              <div className="bg-bg min-h-full py-9 flex flex-col gap-8 sm:w-[400px] w-full">
+                <div className="text-2xl font-manropeb font-bold text-heading-color md:px-8 px-6">
                   {editId ? 'Edit Role' : 'Add Role'}
                 </div>
 
                 <div className="h-full">
                   <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between gap-8">
-                    <div className="px-8 space-y-6">
-                      <InputField label="Type of Ownership" id="ownershipType" value={formData.ownershipType} onChange={handleChange} placeholder="" error={formErrors?.ownershipType} />
-                      <InputField label="Organization Name" id="orgName" value={formData.orgName} onChange={handleChange} placeholder="" error={formErrors?.orgName} />
-                      <InputField label="Organization Number" id="orgNumber" value={formData.orgNumber} onChange={handleChange} placeholder="" error={formErrors?.orgNumber} />
-                      <InputField label="Ownership Percentage" id="ownershipPercentage" value={formData.ownershipPercentage} onChange={handleChange} placeholder="" error={formErrors?.ownershipPercentage} />
+                    <div className="md:px-8 px-6 space-y-6">
+                      <InputField label="Role Title" id="roleTitle" value={formData.roleTitle} onChange={handleChange} placeholder="" error={formErrors?.roleTitle} />
+                      <InputField label="Organization Name" id="orgNameRoles" value={formData.orgNameRoles} onChange={handleChange} placeholder="" error={formErrors?.orgNameRoles} />
+                      <InputField label="Organization Number" id="orgNumberRole" value={formData.orgNumberRole} onChange={handleChange} placeholder="" error={formErrors?.orgNumberRole} />
                       <InputField label="Country of Registration" id="country" value={formData.country} onChange={handleChange} placeholder="" error={formErrors?.country} />
                       <DateInput id="startDate" label="Start Date" value={formData.startDate} onChange={handleChange} required error={formErrors?.startDate} />
                       <DateInput id="endDate" label="End Date (optional)" value={formData.endDate} onChange={handleChange} />

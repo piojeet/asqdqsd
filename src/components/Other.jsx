@@ -10,8 +10,6 @@ function Other() {
     
             ownerships,
     
-            viewId,
-            setViewId,
             setEditId,
             editId,
         } = useOwnership()
@@ -43,8 +41,6 @@ function Other() {
           setEditId(null)
         }
       
-        // Get the item user wants to view
-        const viewedItem = ownerships.find(item => item.id === viewId)
 
   return (
     <div>
@@ -88,7 +84,7 @@ function Other() {
 
 
                 <button
-                    className='p-6 flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb text-base cursor-pointer mt-4'
+                    className='md:p-6 p-4 md:text-base text-sm flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb cursor-pointer mt-8'
                     onClick={openCreateForm}
                 >
                     <Plus /> Add Other Disclosure
@@ -104,33 +100,6 @@ function Other() {
                 />
             )}
 
-
-            {/* View modal */}
-            {viewId && viewedItem && (
-                <div
-                    className="fixed inset-0 bg-black/20 flex items-center justify-center z-50"
-                    onClick={() => setViewId(null)}
-                >
-                    <div
-                        className="bg-white rounded-lg p-6 max-w-md w-full"
-                        onClick={e => e.stopPropagation()} // Prevent modal close when clicking inside
-                    >
-                        <h2 className="text-xl font-bold mb-4">Ownership Details</h2>
-                        <p><strong>Type:</strong> {viewedItem.type || 'N/A'}</p>
-                        <p><strong>Organization:</strong> {viewedItem.organization}</p>
-                        <p><strong>Ownership %:</strong> {viewedItem.ownershipPercent}</p>
-                        <p><strong>Country:</strong> {viewedItem.country}</p>
-                        <p><strong>Last Updated:</strong> {viewedItem.lastUpdated}</p>
-
-                        <button
-                            onClick={() => setViewId(null)}
-                            className="mt-6 px-4 py-2 bg-blue text-bg-light rounded"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
   )
 }

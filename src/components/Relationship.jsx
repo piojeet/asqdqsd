@@ -6,8 +6,6 @@ import RelationshipCreate from './RelationshipCreate'
 function Relationship() {
   const {
     ownerships,
-    viewId,
-    setViewId,
     setEditId,
     editId,
   } = useOwnership()
@@ -40,7 +38,7 @@ function Relationship() {
   }
 
   // Get the item user wants to view
-  const viewedItem = ownerships.find(item => item.id === viewId)
+  // const viewedItem = ownerships.find(item => item.id === viewId)
 
   return (
     <div>
@@ -89,7 +87,7 @@ function Relationship() {
         )}
 
         <button
-          className='p-6 flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb text-base cursor-pointer mt-4'
+          className='md:p-6 p-4 md:text-base text-sm flex gap-2 bg-blue text-bg-light rounded-lg font-manropeb cursor-pointer mt-8'
           onClick={openCreateForm}
         >
           <Plus /> Add Relationship
@@ -106,31 +104,9 @@ function Relationship() {
       )}
 
       {/* View modal */}
-      {viewId && viewedItem && viewedItem.type === 'Relationship' && (
-        <div
-          className="fixed inset-0 bg-black/20 flex items-center justify-center z-50"
-          onClick={() => setViewId(null)}
-        >
-          <div
-            className="bg-white rounded-lg p-6 max-w-md w-full"
-            onClick={e => e.stopPropagation()}
-          >
-            <h2 className="text-xl font-bold mb-4">Relationship Details</h2>
-            <p><strong>Relation Type:</strong> {viewedItem.relationType}</p>
-            <p><strong>Person Name:</strong> {viewedItem.perName}</p>
-            <p><strong>Role in Org:</strong> {viewedItem.roleinOrg}</p>
-            <p><strong>Related Org:</strong> {viewedItem.relatedOrg}</p>
-            <p><strong>Notes:</strong> {viewedItem.notes}</p>
-
-            <button
-              onClick={() => setViewId(null)}
-              className="mt-6 px-4 py-2 bg-blue text-bg-light rounded"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      {/* {viewId && viewedItem && viewedItem.type === 'Relationship' && (
+        
+      )} */}
     </div>
   )
 }

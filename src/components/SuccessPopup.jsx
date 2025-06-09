@@ -23,12 +23,12 @@ function SuccessPopup({ onClose, actionType = 'create', type = 'Ownership Intere
   return (
     <div className="fixed inset-0 bg-black/30 z-[100] flex items-center justify-center">
       <div
-        className={`bg-bg rounded-xl p-8 w-[440px] max-w-[90%] text-center shadow-lg transform transition duration-300 ${
+        className={`bg-bg rounded-xl p-8 sm:w-[440px] max-w-[90%] text-center shadow-lg transform transition duration-300 ${
           animate ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         }`}
       >
         {/* Confetti Area */}
-        <div className="relative w-[265px] h-[140px] mx-auto mb-6">
+        <div className="relative sm:w-[265px] h-[140px] mx-auto sm:mb-6">
           {/* Confetti Shapes */}
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
             <div className="absolute top-3 left-4 w-3 h-3 rotate-45 bg-blue-400" />
@@ -39,11 +39,9 @@ function SuccessPopup({ onClose, actionType = 'create', type = 'Ownership Intere
           </div>
 
           {/* ✅ Animated Check SVG */}
-          <div className="w-[110px] h-[110px] mx-auto bg-blue flex items-center justify-center rounded-full">
+          <div className="sm:w-[110px] sm:h-[110px] size-[90px] mx-auto bg-blue flex items-center justify-center rounded-full">
             <svg
-              width="80px"
-              height="80px"
-              className='stroke-blue'
+              className='stroke-blue sm:size-[80px] size-[60px]'
               viewBox="0 0 133 133"
               xmlns="http://www.w3.org/2000/svg"
               style={{
@@ -94,7 +92,7 @@ function SuccessPopup({ onClose, actionType = 'create', type = 'Ownership Intere
           </div>
         </div>
 
-        <h2 className="text-4xl font-manropeb font-bold text-heading-color mb-6 leading-[125%]">{message}</h2>
+        <h2 className="md:text-4xl sm:text-3xl text-2xl font-manropeb font-bold text-heading-color mb-6 leading-[125%]">{message}</h2>
 
         <button
           onClick={onClose}
